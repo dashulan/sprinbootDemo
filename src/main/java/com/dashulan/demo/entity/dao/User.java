@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(indexes = {@Index(name="user_index_name",columnList = "name",unique = true)})
+@Table(name = "User",indexes = {@Index(name="user_index_name",columnList = "name",unique = true)})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +29,6 @@ public class User {
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    private int role;
 
 
     //--------------

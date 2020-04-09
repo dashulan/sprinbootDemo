@@ -22,14 +22,12 @@ public class UserVo {
         this.id = user.getId();
         this.name = user.getName();
         this.avatar_url =user.getAvatar_url();
-        this.role = user.getRole();
     }
 
     public UserVo fillINfo(User user){
         this.id = user.getId();
         this.name = user.getName();
         this.avatar_url =user.getAvatar_url();
-        this.role = user.getRole();
         return this;
     }
 }

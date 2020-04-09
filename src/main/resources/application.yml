@@ -15,6 +15,8 @@ spring:
   datasource:
     username: dashulan
     password: 123
+    data:
+      - classpath:sql/data.sql
 
 server:
   port: 8083

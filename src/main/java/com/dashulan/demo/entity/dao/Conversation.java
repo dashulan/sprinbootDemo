@@ -1,5 +1,6 @@
 package com.dashulan.demo.entity.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,9 +20,12 @@ public class Conversation {
     private LocalDateTime establish_Time;
     private LocalDateTime lastChat_Time;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "conversation")
     private final List<Message> messages = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToMany
     private final List<User> users = new ArrayList<>();
 }
