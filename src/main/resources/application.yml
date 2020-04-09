@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    show-sql=true
+  artemis:
+    host: localhost
+    port: 61617
+    user: dashulan
+    password: 123
+  jms:
+    template:
+      default-destination: message.queue
+  h2:
+    console:
+      enabled: true
+  datasource:
+    username: dashulan
+    password: 123
+
+server:
+  port: 8083
