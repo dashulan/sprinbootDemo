@@ -1,10 +1,8 @@
 package com.dashulan.demo.entity.dao;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +36,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     private final List<Message> messages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userA",cascade = CascadeType.ALL)
-    Set<UserAndUer> friendsFromMe;
+    @OneToMany(mappedBy = "from",cascade = CascadeType.ALL)
+    Set<MakeFriends> friendAskFromMe;
 
-    @OneToMany(mappedBy = "userB",cascade = CascadeType.ALL)
-    Set<UserAndUer> friendsToMe;
+    @OneToMany(mappedBy = "to",cascade = CascadeType.ALL)
+    Set<MakeFriends> friendAskToMe;
 
 }

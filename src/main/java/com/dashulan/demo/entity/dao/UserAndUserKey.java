@@ -10,11 +10,11 @@ import java.io.Serializable;
 @Embeddable
 public class UserAndUserKey implements Serializable {
 
-    @Column(name = "user_a_id")
-    Long userAId;
+    @Column(name = "user_ask_from")
+    Long from;
 
-    @Column(name = "user_b_id")
-    Long UserBId;
+    @Column(name = "user_ask_to")
+    Long to;
 
 
 }

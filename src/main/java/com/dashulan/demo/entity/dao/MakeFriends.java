@@ -10,22 +10,26 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class UserAndUer {
+public class MakeFriends {
 
     @EmbeddedId
     UserAndUserKey id;
 
     @JsonIgnore
     @ManyToOne
-    @MapsId("user_a_id")
-    @JoinColumn(name="user_a_id")
-    User userA;
+    @MapsId("user_ask_from")
+    @JoinColumn(name="user_ask_from")
+    User from;
 
     @JsonIgnore
     @ManyToOne
-    @MapsId("user_b_id")
-    @JoinColumn(name="user_b_id")
-    User userB;
+    @MapsId("user_ask_to")
+    @JoinColumn(name="user_ask_to")
+    User to;
+
+
+    String remarks;
+
 
 
 }

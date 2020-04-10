@@ -4,6 +4,7 @@ import com.dashulan.demo.dao.ConversationDao;
 import com.dashulan.demo.dao.MessageDao;
 import com.dashulan.demo.dao.UserDao;
 import com.dashulan.demo.entity.dao.Conversation;
+import com.dashulan.demo.entity.dao.MakeFriends;
 import com.dashulan.demo.entity.dao.Message;
 import com.dashulan.demo.entity.dao.User;
 import com.dashulan.demo.service.ConversationService;
@@ -13,6 +14,7 @@ import org.h2.engine.UserBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,19 +25,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-@RunWith(SpringRunner.class)
-@SpringBootTest
 @Slf4j
+@RunWith(SpringRunner.class)
+@DataJpaTest
 public class DaoTest {
 
     @Autowired
     ConversationDao conversationDao;
-
-    @Autowired
-    ConversationService  conversationService;
-
-
 
     @Autowired
     UserDao userDao;
@@ -81,8 +77,19 @@ public class DaoTest {
         userDao.save(userA);
         userDao.save(userB);
 
-        Conversation c = conversationService.getConversationWithUsers(Arrays.asList(userA, userB));
-        System.out.println(c.getUsers().size());
+    }
+
+    @Test
+    public void findFriends(){
+        User u1 = userDao.findByName("大树懒").get();
+        User u2 = userDao.findByName("哈哈").get();
+        MakeFriends m1 = new MakeFriends();
+        m1.setFrom(u1);
+        m1.setTo(u2);
+        u1.getFriendAskFromMe().add(m1);
+        userDao.save(u1);
+        User nu = userDao.findByName("大树懒").get();
+
     }
 
 
