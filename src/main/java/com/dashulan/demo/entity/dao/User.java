@@ -7,10 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-@Getter
-@Setter
-@Entity
+@Data
 @Table(name = "User",indexes = {@Index(name="user_index_name",columnList = "name",unique = true)})
 public class User {
     @Id

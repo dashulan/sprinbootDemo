@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dashulan.demo.chat.dao.MessageDao">
+
+    <resultMap type="com.dashulan.demo.chat.entity.Message" id="MessageMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="text" column="text" jdbcType="VARCHAR"/>
+        <result property="sentTime" column="sent_time" jdbcType="TIMESTAMP"/>
+        <result property="uId" column="u_id" jdbcType="INTEGER"/>
+        <result property="cId" column="c_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MessageMap">
+        select
+          id, text, sent_time, u_id, c_id
+        from robot_chat.message
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MessageMap">
+        select
+          id, text, sent_time, u_id, c_id
+        from robot_chat.message
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="getAllMessagesInConversation" resultMap="MessageMap">
+        select * from message
+        where message.c_id=#{cid}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MessageMap">
+        select
+          id, text, sent_time, u_id, c_id
+        from robot_chat.message
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="text != null and text != ''">
+                and text = #{text}
+            </if>
+            <if test="sentTime != null">
+                and sent_time = #{sentTime}
+            </if>
+            <if test="uId != null">
+                and u_id = #{uId}
+            </if>
+            <if test="cId != null">
+                and c_id = #{cId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into robot_chat.message(text, sent_time, u_id, c_id)
+        values (#{text}, #{sentTime}, #{uId}, #{cId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update robot_chat.message
+        <set>
+            <if test="text != null and text != ''">
+                text = #{text},
+            </if>
+            <if test="sentTime != null">
+                sent_time = #{sentTime},
+            </if>
+            <if test="uId != null">
+                u_id = #{uId},
+            </if>
+            <if test="cId != null">
+                c_id = #{cId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from robot_chat.message where id = #{id}
+    </delete>
+
+</mapper>

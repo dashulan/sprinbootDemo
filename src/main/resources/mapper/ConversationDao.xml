@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dashulan.demo.chat.dao.ConversationDao">
+
+    <resultMap type="com.dashulan.demo.chat.entity.Conversation" id="ConversationMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+        <result property="lastChatAt" column="last_chat_at" jdbcType="TIMESTAMP"/>
+        <result property="type" column="type" jdbcType="int"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ConversationMap">
+        select
+          id, created_at, last_chat_at,type
+        from robot_chat.conversation
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ConversationMap">
+        select
+          id, created_at, last_chat_at,type
+        from robot_chat.conversation
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="findConversation">
+        select c_id
+            from user_conversation
+            where u_id=#{user} and type=#{type }
+    </select>
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ConversationMap">
+        select
+          id, created_at, last_chat_at,type
+        from robot_chat.conversation
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="createdAt != null">
+                and created_at = #{createdAt}
+            </if>
+            <if test="lastChatAt != null">
+                and last_chat_at = #{lastChatAt}
+            </if>
+        </where>
+    </select>
+
+    <select id="getAllUserConversations" resultMap="ConversationMap">
+        select
+        id, created_at, last_chat_at, type
+        from
+        conversation join user_conversation on user_conversation.c_id= conversation.id
+        and user_conversation.u_id = #{uid}
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into robot_chat.conversation(created_at, last_chat_at,type)
+        values (#{createdAt}, #{lastChatAt},#{type})
+    </insert>
+
+    <insert id="addUserIntoConversation" >
+        insert into user_conversation (u_id, c_id) values (#{uid},#{cid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update robot_chat.conversation
+        <set>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+            <if test="lastChatAt != null">
+                last_chat_at = #{lastChatAt},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from robot_chat.conversation where id = #{id}
+    </delete>
+
+</mapper>

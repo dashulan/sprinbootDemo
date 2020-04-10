@@ -5,9 +5,7 @@ import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
 @Data
-@Entity
 @Table(indexes = {@Index(name="user_phone_active_index",columnList = "phone",unique = true)})
 public class UserNeedActive {
     @Id

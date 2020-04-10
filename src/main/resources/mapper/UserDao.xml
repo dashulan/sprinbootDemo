@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dashulan.demo.chat.dao.UserDao">
+
+    <resultMap type="com.dashulan.demo.chat.entity.User" id="UserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+        <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+        <result property="avatarUrl" column="avatar_url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserMap">
+        select
+          id, name, password, phone, created_at, updated_at, avatar_url
+        from robot_chat.user
+        where id = #{id}
+    </select>
+    <select id="queryByName" resultMap="UserMap">
+        select *
+        from user
+        where name=#{name}
+    </select>
+
+    <select id="queryByPhone" resultMap="UserMap">
+        select *
+        from user
+        where phone=#{phone}
+    </select>
+
+
+    <select id="getAllFriendsAsk" resultType="Long">
+        select f1.user_asK_to
+        from friend_ask f1
+        join friend_ask f2
+        on f1.user_ask_from = f2.user_asK_to
+        and f1.user_asK_to=f2.user_ask_from
+        and f1.user_ask_from = #{id}
+    </select>
+
+    <select id="getAllFriendsAskFrom">
+        select user_asK_to
+        from friend_ask
+        where user_ask_from = #{id}
+    </select>
+
+
+    <select id="getAllFriendsAskTo">
+        select user_ask_from
+        from friend_ask
+        where user_asK_to= #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UserMap">
+        select
+          id, name, password, phone, created_at, updated_at, avatar_url
+        from robot_chat.user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UserMap">
+        select
+          id, name, password, phone, created_at, updated_at, avatar_url
+        from robot_chat.user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="createdAt != null">
+                and created_at = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at = #{updatedAt}
+            </if>
+            <if test="avatarUrl != null and avatarUrl != ''">
+                and avatar_url = #{avatarUrl}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into robot_chat.user(name, password, phone, created_at, updated_at, avatar_url)
+        values (#{name}, #{password}, #{phone}, #{createdAt}, #{updatedAt}, #{avatarUrl})
+    </insert>
+
+
+    <insert id="addAskFromTo">
+        insert into friend_ask (user_ask_from, user_asK_to)
+         values (#{from},#{to})
+    </insert>
+    <!--通过主键修改数据-->
+    <update id="update">
+        update robot_chat.user
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt},
+            </if>
+            <if test="avatarUrl != null and avatarUrl != ''">
+                avatar_url = #{avatarUrl},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from robot_chat.user where id = #{id}
+    </delete>
+
+</mapper>

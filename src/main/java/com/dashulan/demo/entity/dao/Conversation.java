@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Data
-@Entity
 public class Conversation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

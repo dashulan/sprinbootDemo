@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ConversationDao extends CrudRepository<Conversation,Long> {
+public interface ConversationDao {
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dashulan.demo.chat.dao.FriendAskDao">
+
+    <resultMap type="com.dashulan.demo.chat.entity.FriendAsk" id="FriendAskMap">
+        <result property="userAskFrom" column="user_ask_from" jdbcType="INTEGER"/>
+        <result property="userAskTo" column="user_asK_to" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="FriendAskMap">
+        select
+          user_ask_from, user_asK_to
+        from robot_chat.friend_ask
+        where user_ask_from = #{userAskFrom}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="FriendAskMap">
+        select
+          user_ask_from, user_asK_to
+        from robot_chat.friend_ask
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="FriendAskMap">
+        select
+          user_ask_from, user_asK_to
+        from robot_chat.friend_ask
+        <where>
+            <if test="userAskFrom != null">
+                and user_ask_from = #{userAskFrom}
+            </if>
+            <if test="userAskTo != null">
+                and user_asK_to = #{userAskTo}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="userAskFrom" useGeneratedKeys="true">
+        insert into robot_chat.friend_ask()
+        values ()
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update robot_chat.friend_ask
+        <set>
+        </set>
+        where user_ask_from = #{userAskFrom}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from robot_chat.friend_ask where user_ask_from = #{userAskFrom}
+    </delete>
+
+</mapper>

@@ -23,7 +23,7 @@ public class UserRepoTest {
     @Autowired
     private TestEntityManager entityManager;
 
-    @Autowired
+/*    @Autowired
     private UserDao userDao;
 
     @Test
@@ -40,6 +40,6 @@ public class UserRepoTest {
         assertThat(user).isNotNull();
 
         Optional<User> byId = userDao.findById(1l);
-    }
+    }*/
 
 }

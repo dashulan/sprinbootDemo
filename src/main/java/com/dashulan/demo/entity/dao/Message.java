@@ -9,9 +9,7 @@ import org.hibernate.annotations.Fetch;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
 @Data
-@Entity
 public class Message implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

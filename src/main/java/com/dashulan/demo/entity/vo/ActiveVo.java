@@ -8,5 +8,4 @@ public class ActiveVo {
     private String code;
     private String name;
     private String password;
-
 }
