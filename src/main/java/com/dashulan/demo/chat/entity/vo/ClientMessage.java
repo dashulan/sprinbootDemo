@@ -1,13 +1,10 @@
-package com.dashulan.demo.entity;
+package com.dashulan.demo.chat.entity.vo;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Data
 public class ClientMessage {
-    private Long UserId;
+    private Long uid;
     private String text;
     private String sent;
     private Long conversationId;

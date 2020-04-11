@@ -6,7 +6,6 @@ drop table if exists friend_ask;
 drop table if exists user;
 
 
-
 create table user(
     `id` bigint primary key auto_increment,
     `name` varchar(255) not null ,
@@ -26,7 +25,6 @@ create table conversation(
     `type` tinyint
 );
 
-# 多对多联系
 create table user_conversation(
     `u_id` bigint,
     `c_id` bigint,
@@ -35,7 +33,6 @@ create table user_conversation(
     constraint fk_user_conversation_conversation foreign key (c_id) references conversation(id)
 );
 
-#
 create table message(
     `id` bigint primary key auto_increment,
     `text` varchar(1023),
@@ -46,7 +43,6 @@ create table message(
     constraint fk_message_conversation foreign key (c_id) references conversation(id)
 );
 
-# 好友请求表 多对多
 create table friend_ask(
     `user_ask_from` bigint,
     `user_asK_to` bigint,

@@ -24,5 +24,4 @@ public class Conversation implements Serializable {
     private LocalDateTime lastChatAt;
 
 
-
 }

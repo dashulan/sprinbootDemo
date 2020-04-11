@@ -2,6 +2,7 @@ package com.dashulan.demo.chat.dao;
 
 import com.dashulan.demo.chat.entity.Conversation;
 import com.dashulan.demo.chat.entity.Message;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @author makejava
  * @since 2020-04-10 17:19:03
  */
-@Repository
+@Mapper
 public interface MessageDao {
 
 

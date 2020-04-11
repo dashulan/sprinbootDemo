@@ -3,6 +3,7 @@ package com.dashulan.demo.chat.service;
 import com.dashulan.demo.chat.entity.Conversation;
 import com.dashulan.demo.chat.entity.Message;
 import com.dashulan.demo.chat.entity.User;
+import com.dashulan.demo.chat.entity.vo.ClientMessage;
 
 import java.util.List;
 
@@ -36,4 +37,5 @@ public interface ConversationService {
     List<Conversation> getUserAllConversations(Long id);
 
     List<Message> getAllMessageInConversation(Long cid);
+
 }

@@ -1,6 +1,7 @@
 package com.dashulan.demo.chat.dao;
 
 import com.dashulan.demo.chat.entity.UserNeedActive;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @author makejava
  * @since 2020-04-10 17:31:00
  */
-@Repository
+@Mapper
 public interface UserNeedActiveDao {
 
 

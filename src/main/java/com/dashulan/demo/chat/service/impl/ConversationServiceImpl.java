@@ -4,6 +4,7 @@ import com.dashulan.demo.chat.dao.MessageDao;
 import com.dashulan.demo.chat.entity.Conversation;
 import com.dashulan.demo.chat.dao.ConversationDao;
 import com.dashulan.demo.chat.entity.Message;
+import com.dashulan.demo.chat.entity.vo.ClientMessage;
 import com.dashulan.demo.chat.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,15 +22,11 @@ import java.util.*;
 @Service("conversationService")
 public class ConversationServiceImpl implements ConversationService {
 
+    @Resource
     private ConversationDao conversationDao;
 
+    @Resource
     private MessageDao messageDao;
-
-    @Autowired
-    public ConversationServiceImpl(ConversationDao conversationDao, MessageDao messageDao) {
-        this.conversationDao = conversationDao;
-        this.messageDao = messageDao;
-    }
 
     @Override
     public Conversation queryById(Long id) {
@@ -63,7 +60,8 @@ public class ConversationServiceImpl implements ConversationService {
     public List<Long> establishConversation(List<Long> users,int type) {
         Map<Long,List<Long>> map = new HashMap<>();
         users.forEach(user->{
-            map.put(user, conversationDao.findConversation(user,type));
+
+            map.put(user, this.getConversationsId(conversationDao.findConversation(user,type)));
         });
         List<Long> list=  new ArrayList<>();
         list.addAll(map.get(users.get(0)));
@@ -78,13 +76,20 @@ public class ConversationServiceImpl implements ConversationService {
             conversationDao.insert(conversation);
             Long cid = conversation.getId();
             users.forEach(u->{
-                conversationDao.addUserIntoConversation(u, cid);
+                conversationDao.addUserIntoConversation(u, cid,type);
             });
             list.add(cid);
         }
         return list;
     }
 
+    private List<Long> getConversationsId(List<Conversation> conversations) {
+        List<Long> longs = new ArrayList<>();
+        conversations.forEach(
+                c -> longs.add(c.getId())
+        );
+        return longs;
+    }
 
     @Override
     public List<Conversation> getUserAllConversations(Long uid) {

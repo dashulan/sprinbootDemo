@@ -27,7 +27,7 @@
     </select>
 
     <select id="getAllMessagesInConversation" resultMap="MessageMap">
-        select * from message
+        select * from robot_chat.message
         where message.c_id=#{cid}
     </select>
 

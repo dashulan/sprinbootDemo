@@ -1,4 +1,4 @@
-package com.dashulan.demo.entity.vo;
+package com.dashulan.demo.chat.entity.vo;
 
 import com.dashulan.demo.chat.entity.User;
 import lombok.Data;
@@ -15,7 +15,6 @@ public class UserVo {
     public UserVo(User user) {
         this.id = user.getId();
         this.name = user.getName();
-        this.avatar_url =user.getAvatarUrl();
+        this.avatar_url = user.getAvatarUrl();
     }
-
 }

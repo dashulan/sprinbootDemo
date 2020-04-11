@@ -1,27 +1,14 @@
-package com.dashulan.demo.web;
+package com.dashulan.demo.chat.web;
 
 import com.dashulan.demo.chat.entity.User;
 import com.dashulan.demo.chat.service.UserService;
-import com.dashulan.demo.dao.UserDao;
-import com.dashulan.demo.dao.UserNeedActiveDao;
-import com.dashulan.demo.entity.dao.Conversation;
-import com.dashulan.demo.entity.dao.UserNeedActive;
-import com.dashulan.demo.entity.vo.ActiveVo;
-import com.dashulan.demo.entity.vo.ResponseData;
-import com.dashulan.demo.entity.vo.SuggestName;
-import com.dashulan.demo.entity.vo.UserVo;
-import com.dashulan.demo.service.ConversationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dashulan.demo.chat.entity.vo.ResponseData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @CrossOrigin
 @Controller
@@ -77,13 +64,13 @@ public class AuthController {
     public ResponseEntity<String> suggestName(String name) {
         User user = userService.findUser(name);
         if (user == null) {
-            return new ResponseEntity<>("用户名重复", HttpStatus.OK);
+            return new ResponseEntity<>("ok", HttpStatus.OK);
         }
-        return new ResponseEntity<>("ok", HttpStatus.OK);
+        return new ResponseEntity<>("用户名重复", HttpStatus.OK);
 
     }
 
-    @PostMapping(path = "/register")
+    @PostMapping(path = "/active")
     public ResponseEntity<String> active(@RequestBody User user, @PathParam("code")String code){
         boolean isActive = userService.activeUser(user.getPhone(),code);
         if (!isActive) {

@@ -1,18 +1,20 @@
-package com.dashulan.demo.web;
+package com.dashulan.demo.chat.web;
 
 import com.dashulan.demo.chat.entity.User;
 import com.dashulan.demo.chat.service.UserService;
-import com.dashulan.demo.entity.vo.ResponseData;
-import com.dashulan.demo.entity.vo.UserVo;
+import com.dashulan.demo.chat.entity.vo.ResponseData;
+import com.dashulan.demo.chat.entity.vo.UserVo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.*;
 
+@CrossOrigin
 @Controller
 @RequestMapping("/user")
 public class UserController {

@@ -14,7 +14,7 @@
     <select id="queryByPhone" resultMap="UserNeedActiveMap">
         select
             *
-        from user_need_active
+        from robot_chat.user_need_active
         where phone = #{phone}
     </select>
 

@@ -1,7 +1,7 @@
 package com.dashulan.demo.chat.service;
 
 import com.dashulan.demo.chat.entity.Message;
-import com.dashulan.demo.entity.ClientMessage;
+import com.dashulan.demo.chat.entity.vo.ClientMessage;
 
 import java.util.List;
 

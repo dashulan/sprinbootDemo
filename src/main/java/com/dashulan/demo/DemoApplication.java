@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.concurrent.CompletableFuture;
 
-@MapperScan("com.dashulan.demo.mapper")
 @SpringBootApplication
 public class DemoApplication {
 

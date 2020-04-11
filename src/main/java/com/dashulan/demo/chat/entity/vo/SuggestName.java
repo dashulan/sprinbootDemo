@@ -1,4 +1,4 @@
-package com.dashulan.demo.entity.vo;
+package com.dashulan.demo.chat.entity.vo;
 
 import lombok.Data;
 

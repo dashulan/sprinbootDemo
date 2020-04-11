@@ -3,11 +3,13 @@ package com.dashulan.demo.chat.service.impl;
 import com.dashulan.demo.chat.entity.Message;
 import com.dashulan.demo.chat.dao.MessageDao;
 import com.dashulan.demo.chat.service.MessageService;
-import com.dashulan.demo.entity.ClientMessage;
+import com.dashulan.demo.chat.entity.vo.ClientMessage;
+import com.dashulan.demo.chat.utils.MessageFormatUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -53,16 +55,8 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void messagePersistence(ClientMessage clientMessage) {
-        Message message = convertMessageFromClient(clientMessage);
+        Message message = MessageFormatUtil.clientMessage2Message(clientMessage);
         messageDao.insert(message);
     }
 
-    private Message convertMessageFromClient(ClientMessage clientMessage) {
-        Message message = new Message();
-        message.setText(clientMessage.getText());
-        message.setSentTime(LocalDateTime.now());
-        message.setUId(clientMessage.getUserId());
-        message.setCId(clientMessage.getConversationId());
-        return message;
-    }
 }

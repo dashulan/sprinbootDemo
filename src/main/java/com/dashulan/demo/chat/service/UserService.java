@@ -1,8 +1,6 @@
 package com.dashulan.demo.chat.service;
 
 import com.dashulan.demo.chat.entity.User;
-import com.dashulan.demo.entity.vo.ActiveVo;
-import com.dashulan.demo.entity.vo.UserVo;
 
 import java.util.List;
 

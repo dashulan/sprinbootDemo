@@ -22,12 +22,10 @@ import java.util.UUID;
 @Service("userNeedActiveService")
 public class UserNeedActiveServiceImpl implements UserNeedActiveService {
 
+    @Resource
     private UserNeedActiveDao userNeedActiveDao;
 
-    @Autowired
-    public UserNeedActiveServiceImpl(UserNeedActiveDao userNeedActiveDao) {
-        this.userNeedActiveDao = userNeedActiveDao;
-    }
+
 
     @Override
     public UserNeedActive queryById(Long id) {
@@ -61,16 +59,16 @@ public class UserNeedActiveServiceImpl implements UserNeedActiveService {
     public UserNeedActive generateCode(String phone) {
         UserNeedActive id =  userNeedActiveDao.findCodeByPhone(phone);
         if (id == null) {
-            return null;
+            UUID uuid = UUID.randomUUID();
+            UserNeedActive userNeedActive = new UserNeedActive();
+            userNeedActive.setCode(uuid.toString().substring(0,6));
+            userNeedActive.setCreatedAt(LocalDateTime.now());
+            userNeedActive.setIsActive(false);
+            userNeedActive.setPhone(phone);
+            userNeedActiveDao.insert(userNeedActive);
+            return userNeedActive;
         }
-        UUID uuid = UUID.randomUUID();
-        UserNeedActive userNeedActive = new UserNeedActive();
-        userNeedActive.setCode(uuid.toString().substring(0,6));
-        userNeedActive.setCreatedAt(LocalDateTime.now());
-        userNeedActive.setIsActive(false);
-        userNeedActive.setPhone(phone);
-        userNeedActiveDao.insert(userNeedActive);
-        return userNeedActive;
+        return null;
     }
 
     @Override

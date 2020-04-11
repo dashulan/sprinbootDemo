@@ -21,36 +21,38 @@
     </select>
     <select id="queryByName" resultMap="UserMap">
         select *
-        from user
+        from robot_chat.user
         where name=#{name}
     </select>
 
     <select id="queryByPhone" resultMap="UserMap">
         select *
-        from user
+        from robot_chat.user
         where phone=#{phone}
     </select>
 
 
-    <select id="getAllFriendsAsk" resultType="Long">
-        select f1.user_asK_to
-        from friend_ask f1
-        join friend_ask f2
+    <select id="getAllFriendsAsk" resultMap="UserMap">
+        select u1.id, name, phone, avatar_url
+        from robot_chat.friend_ask f1
+        join robot_chat.friend_ask f2
         on f1.user_ask_from = f2.user_asK_to
+        join robot_chat.user u1
+        on f1.user_asK_to = u1.id
         and f1.user_asK_to=f2.user_ask_from
         and f1.user_ask_from = #{id}
     </select>
 
     <select id="getAllFriendsAskFrom">
-        select user_asK_to
-        from friend_ask
+        select *
+        from robot_chat.friend_ask
         where user_ask_from = #{id}
     </select>
 
 
     <select id="getAllFriendsAskTo">
         select user_ask_from
-        from friend_ask
+        from robot_chat.friend_ask
         where user_asK_to= #{id}
     </select>
 
@@ -100,7 +102,7 @@
 
 
     <insert id="addAskFromTo">
-        insert into friend_ask (user_ask_from, user_asK_to)
+        insert into robot_chat.friend_ask (user_ask_from, user_asK_to)
          values (#{from},#{to})
     </insert>
     <!--通过主键修改数据-->

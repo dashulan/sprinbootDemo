@@ -2,6 +2,7 @@ package com.dashulan.demo.chat.dao;
 
 import com.dashulan.demo.chat.entity.Conversation;
 import com.dashulan.demo.chat.entity.Message;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @author makejava
  * @since 2020-04-10 17:17:43
  */
-@Repository
+@Mapper
 public interface ConversationDao {
 
     Conversation queryById(Long id);
@@ -24,13 +25,15 @@ public interface ConversationDao {
 
     int insert(Conversation conversation);
 
+    int establishConversation(Conversation conversation, int type);
+
     int update(Conversation conversation);
 
     int deleteById(Long id);
 
-    List<Long> findConversation(@Param("user") Long id, @Param("type") int type);
+    List<Conversation> findConversation(@Param("user") Long id, @Param("type") int type);
 
-    boolean addUserIntoConversation(@Param("uid") Long uid, @Param("cid") Long cid);
+    boolean addUserIntoConversation(@Param("uid") Long uid, @Param("cid") Long cid,@Param("type")int type);
 
     List<Conversation> getAllUserConversations(Long uid);
 

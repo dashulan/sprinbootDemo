@@ -1,21 +1,14 @@
-package com.dashulan.demo.web;
+package com.dashulan.demo.chat.web;
 
 import com.dashulan.demo.chat.service.MessageService;
-import com.dashulan.demo.dao.ConversationDao;
-import com.dashulan.demo.dao.MessageDao;
-import com.dashulan.demo.dao.UserDao;
-import com.dashulan.demo.entity.ClientMessage;
-import com.dashulan.demo.entity.dao.Message;
+import com.dashulan.demo.chat.entity.vo.ClientMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 
 @Slf4j
 @CrossOrigin
@@ -42,7 +35,6 @@ public class RealTimeChatController {
 
 
 
-    @Transactional
     @MessageMapping("/conversation/{conversation}")
     public void send2Conversation(ClientMessage clientMessage, @DestinationVariable String conversation) {
         messageService.messagePersistence(clientMessage);

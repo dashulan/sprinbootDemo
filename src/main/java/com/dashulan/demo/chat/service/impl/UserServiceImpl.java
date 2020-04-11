@@ -1,14 +1,10 @@
 package com.dashulan.demo.chat.service.impl;
 
-import com.dashulan.demo.chat.dao.UserNeedActiveDao;
 import com.dashulan.demo.chat.entity.User;
 import com.dashulan.demo.chat.dao.UserDao;
 import com.dashulan.demo.chat.entity.UserNeedActive;
 import com.dashulan.demo.chat.service.UserNeedActiveService;
 import com.dashulan.demo.chat.service.UserService;
-import com.dashulan.demo.entity.vo.ActiveVo;
-import com.dashulan.demo.entity.vo.UserVo;
-import jdk.vm.ci.meta.Local;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +12,6 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
@@ -28,12 +23,12 @@ import java.util.regex.Pattern;
 @Service("userService")
 @Slf4j
 public class UserServiceImpl implements UserService {
+    @Resource
     private UserDao userDao;
 
     private UserNeedActiveService codeService;
 
-    public UserServiceImpl(UserDao userDao,UserNeedActiveService codeService) {
-        this.userDao = userDao;
+    public UserServiceImpl(UserNeedActiveService codeService) {
         this.codeService = codeService;
     }
 
@@ -82,7 +77,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         userDao.addAskFromTo(f.getId(), t.getId());
-        userDao.addAskFromTo(t.getId(), f.getId());
+//        userDao.addAskFromTo(t.getId(), f.getId());
         return true;
     }
 
@@ -119,7 +114,7 @@ public class UserServiceImpl implements UserService {
 
     private User deriveInformationType(String user) {
         Pattern phonePattern = Pattern.compile("[\\d]{11}");
-        Pattern namePattern = Pattern.compile("^(?!_)(?!.*?_$)[a-zA-Z0-9_\\u4e00-\\u9fa5]+$");
+        Pattern namePattern = Pattern.compile("^(?!_)(?!.*?_$)[a-zA-Z_\\u4e00-\\u9fa5]+$");
         if (phonePattern.matcher(user).matches()) {
             return userDao.queryByPhone(user);
         } else if (namePattern.matcher(user).matches()) {
@@ -131,10 +126,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addUserWaitActive(String phone) {
-        String code = codeService.generateCode(phone).getCode();
-        if (code == null) {
+        UserNeedActive u =  codeService.generateCode(phone);
+        if (u == null) {
             return false;
         }
+        String code = u.getCode();
         informUser(code);
         return true;
     }
