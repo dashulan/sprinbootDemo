@@ -1,9 +1,11 @@
 package com.dashulan.demo.chat.service.impl;
 
 import com.dashulan.demo.chat.dao.MessageDao;
+import com.dashulan.demo.chat.dao.UserDao;
 import com.dashulan.demo.chat.entity.Conversation;
 import com.dashulan.demo.chat.dao.ConversationDao;
 import com.dashulan.demo.chat.entity.Message;
+import com.dashulan.demo.chat.entity.User;
 import com.dashulan.demo.chat.entity.vo.ClientMessage;
 import com.dashulan.demo.chat.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class ConversationServiceImpl implements ConversationService {
 
     @Resource
     private MessageDao messageDao;
+
+    @Resource
+    private UserDao userDao;
 
     @Override
     public Conversation queryById(Long id) {
@@ -89,6 +94,27 @@ public class ConversationServiceImpl implements ConversationService {
                 c -> longs.add(c.getId())
         );
         return longs;
+    }
+
+    @Override
+    public String getConversationTitle(Conversation conversation,String exclude) {
+        List<Long> usersInConversation = conversationDao.getUsersInConversation(conversation.getId());
+        List<String> names = new ArrayList<>();
+        usersInConversation.forEach(u->{
+            User user = userDao.queryById(u);
+            names.add(user.getName());
+        });
+
+        names.remove(exclude);
+        if (names.isEmpty()) {
+            return "";
+        }
+        return names.get(0);
+    }
+
+    @Override
+    public String getConversationCaption(Conversation conversation) {
+        return null;
     }
 
     @Override

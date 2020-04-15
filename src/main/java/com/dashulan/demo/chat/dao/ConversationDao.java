@@ -2,6 +2,7 @@ package com.dashulan.demo.chat.dao;
 
 import com.dashulan.demo.chat.entity.Conversation;
 import com.dashulan.demo.chat.entity.Message;
+import com.dashulan.demo.chat.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -37,4 +38,5 @@ public interface ConversationDao {
 
     List<Conversation> getAllUserConversations(Long uid);
 
+    List<Long> getUsersInConversation(Long cid);
 }

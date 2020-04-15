@@ -57,6 +57,11 @@
         and user_conversation.u_id = #{uid}
     </select>
 
+    <select id="getUsersInConversation" resultType="Long">
+        select u_id from user_conversation where c_id = #{cid}
+    </select>
+
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into robot_chat.conversation(created_at, last_chat_at)

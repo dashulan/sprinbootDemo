@@ -43,14 +43,14 @@
         and f1.user_ask_from = #{id}
     </select>
 
-    <select id="getAllFriendsAskFrom">
-        select *
+    <select id="getAllFriendsAskFrom" resultType="Long">
+        select user_asK_to
         from robot_chat.friend_ask
         where user_ask_from = #{id}
     </select>
 
 
-    <select id="getAllFriendsAskTo">
+    <select id="getAllFriendsAskTo" resultType="Long">
         select user_ask_from
         from robot_chat.friend_ask
         where user_asK_to= #{id}

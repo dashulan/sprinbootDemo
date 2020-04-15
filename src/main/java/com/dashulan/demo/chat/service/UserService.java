@@ -30,7 +30,7 @@ public interface UserService {
 
     List<User> findAllFriends(String user);
 
-    List<User> findAllFriendsAskTo(String user);
+    List<User> findAllFriendsAskToMe(String user);
 
     List<User> findAllFriendsAskFrom(String user);
 

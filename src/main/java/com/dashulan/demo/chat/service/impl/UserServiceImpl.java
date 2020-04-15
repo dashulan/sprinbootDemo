@@ -91,11 +91,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllFriendsAskTo(String user) {
+    public List<User> findAllFriendsAskToMe(String user) {
         User u = deriveInformationType(user);
-        List<Long> users = userDao.getAllFriendsAskTo(u.getId());
+        List<Long> askToMe = userDao.getAllFriendsAskTo(u.getId());
+        List<Long> askFromMe = userDao.getAllFriendsAskFrom(u.getId());
+        askToMe.removeAll(askFromMe);
         List<User> userList = new ArrayList<>();
-        users.forEach(id ->
+        askToMe.forEach(id ->
             userList.add(userDao.queryById(id))
         );
         return userList;

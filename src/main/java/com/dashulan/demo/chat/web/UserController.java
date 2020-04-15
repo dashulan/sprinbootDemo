@@ -37,6 +37,9 @@ public class UserController {
 
     @RequestMapping("/add/{from}/{to}")
     public ResponseEntity<ResponseData> add(@PathVariable String from, @PathVariable String to) {
+        if (from.equals(to)) {
+            return new ResponseEntity<>(ResponseData.ok("自言自语把"), HttpStatus.OK);
+        }
         if (userService.askFriend(from, to)) {
             return new ResponseEntity<>(ResponseData.ok("请求成功"), HttpStatus.OK);
         }else {
@@ -52,6 +55,16 @@ public class UserController {
             userVoList.add(new UserVo(user));
         });
         return new ResponseEntity<>(ResponseData.ok(userVoList), HttpStatus.OK);
+    }
+
+    @GetMapping("/friends/askTome/{uname}")
+    public ResponseEntity<ResponseData> getFriendAskFrom(@PathVariable String uname) {
+        List<User> userList = userService.findAllFriendsAskToMe(uname);
+        List<UserVo> userVos = new ArrayList<>();
+        userList.forEach(user -> {
+            userVos.add(new UserVo(user));
+        });
+        return new ResponseEntity<>(ResponseData.ok(userVos), HttpStatus.OK);
     }
 
 

@@ -38,4 +38,8 @@ public interface ConversationService {
 
     List<Message> getAllMessageInConversation(Long cid);
 
+    String getConversationTitle(Conversation conversation,String exclude);
+
+    String getConversationCaption(Conversation conversation);
+
 }
